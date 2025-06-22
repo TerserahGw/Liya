@@ -24,6 +24,11 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
+// Health check endpoint (tambahkan di bawah middleware, sebelum route '/api/...')
+app.get('/', (req, res) => {
+  res.status(200).send('OK'); // Respon sederhana
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/groups', groupRoutes);
