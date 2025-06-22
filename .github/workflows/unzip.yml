@@ -1,0 +1,27 @@
+name: Unzip KeilaChat.zip
+
+on:
+  push:
+    paths:
+      - KeilaChat.zip
+
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Unzip the project
+        run: |
+          unzip KeilaChat.zip -d temp
+          mv temp/* .
+          rm -rf temp KeilaChat.zip
+
+      - name: Commit extracted files
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git add .
+          git commit -m "Auto-extracted KeilaChat.zip"
+          git push
