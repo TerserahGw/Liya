@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - KeilaChat.zip
+  workflow_dispatch:  # ← untuk tombol manual "Run"
 
 jobs:
   unzip:
