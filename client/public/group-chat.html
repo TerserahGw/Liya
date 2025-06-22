@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chioriya Chat | Group</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="group-chat-page">
+    <header class="app-header">
+        <button class="menu-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
+        <h1 id="groupNameHeader">Group Name</h1>
+        <button class="profile-btn" id="profileBtn"><div class="profile-pic-small"></div></button>
+    </header>
+
+    <main class="group-chat-main">
+        <div class="chat-container">
+            <div class="messages-container" id="messagesContainer">
+                <div class="welcome-message">
+                    <h3>Welcome to the group!</h3>
+                    <p>Start chatting with members</p>
+                </div>
+            </div>
+            
+            <div class="chat-input-container">
+                <button class="emoji-btn" id="emojiBtn"><i class="fas fa-smile"></i></button>
+                <input type="text" id="messageInput" placeholder="Type a message...">
+                <button class="send-btn" id="sendMessageBtn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </main>
+
+    <div class="side-menu" id="sideMenu">
+        <div class="menu-header">
+            <div class="profile-pic-medium" id="menuProfilePic"></div>
+            <h3 id="menuUsername">Username</h3>
+            <button class="close-menu" id="closeMenu"><i class="fas fa-times"></i></button>
+        </div>
+        
+        <nav class="menu-nav">
+            <div class="menu-section">
+                <div class="menu-item" id="friendsMenuItem">
+                    <i class="fas fa-user-friends"></i>
+                    <span>Friends</span>
+                </div>
+                <div class="friend-list-menu" id="friendListMenu"></div>
+            </div>
+            
+            <div class="menu-section">
+                <div class="menu-item" id="groupsMenuItem">
+                    <i class="fas fa-users"></i>
+                    <span>Groups</span>
+                </div>
+                <div class="group-list-menu" id="groupListMenu"></div>
+                <button class="menu-item" id="createGroupBtn">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Create Group</span>
+                </button>
+            </div>
+        </nav>
+        
+        <div class="menu-footer">
+            <a href="#" class="menu-item" id="settingsMenuItem"><i class="fas fa-cog"></i> Settings</a>
+            <a href="#" class="menu-item" id="logoutMenuItem"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </div>
+
+    <div class="right-sidebar" id="rightSidebar">
+        <div class="sidebar-header">
+            <div class="group-pic-medium" id="groupSidebarPic"></div>
+            <h3 id="groupSidebarName">Group Name</h3>
+            <button class="close-sidebar" id="closeRightSidebar"><i class="fas fa-times"></i></button>
+        </div>
+        
+        <div class="sidebar-content">
+            <div class="sidebar-section">
+                <div class="sidebar-item" id="roomsMenuItem">
+                    <i class="fas fa-comments"></i>
+                    <span>Rooms</span>
+                </div>
+                <div class="room-list" id="roomList"></div>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-item" id="membersMenuItem">
+                    <i class="fas fa-users"></i>
+                    <span>Members</span>
+                </div>
+                <div class="member-list" id="memberList"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-menu" id="profileMenu">
+        <div class="profile-menu-header">
+            <div class="profile-pic-large" id="profilePicLarge"></div>
+            <h3 id="profileMenuUsername">Username</h3>
+            <button class="close-profile-menu" id="closeProfileMenu"><i class="fas fa-times"></i></button>
+        </div>
+        
+        <div class="profile-menu-content">
+            <div class="profile-menu-item" id="editProfileBtn">
+                <i class="fas fa-user-edit"></i>
+                <span>Edit Profile</span>
+            </div>
+            <div class="profile-menu-item">
+                <i class="fas fa-share-alt"></i>
+                <span>My Invite Code: <span id="userInviteCode">XXXX-XXXX</span></span>
+                <button class="copy-btn" id="copyInviteBtn"><i class="fas fa-copy"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="groupSettingsModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Group Settings</h2>
+            
+            <div class="tab-container">
+                <button class="tab-btn active" data-tab="general">General</button>
+                <button class="tab-btn" data-tab="roles">Roles</button>
+                <button class="tab-btn" data-tab="rooms">Rooms</button>
+            </div>
+            
+            <div class="tab-content active" id="generalTab">
+                <form id="groupSettingsForm">
+                    <div class="form-group">
+                        <label for="groupNameSetting">Group Name</label>
+                        <input type="text" id="groupNameSetting" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="groupDescSetting">Description</label>
+                        <textarea id="groupDescSetting"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="groupTypeSetting">Type</label>
+                        <select id="groupTypeSetting">
+                            <option value="social">Social</option>
+                            <option value="gaming">Gaming</option>
+                            <option value="mystery">Mystery</option>
+                            <option value="political">Political</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Group Photo</label>
+                        <div class="upload-btn-container">
+                            <button type="button" class="btn btn-secondary" id="changeGroupPhotoBtn">
+                                <i class="fas fa-camera"></i> Change Photo
+                            </button>
+                            <input type="file" id="groupPhotoInput" accept="image/*" style="display: none;">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+            
+            <div class="tab-content" id="rolesTab">
+                <button class="btn btn-small" id="addRoleBtn">Add Role</button>
+                <div class="roles-list" id="rolesList"></div>
+            </div>
+            
+            <div class="tab-content" id="roomsTab">
+                <button class="btn btn-small" id="addRoomBtn">Add Room</button>
+                <div class="rooms-list" id="roomsList"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="roleModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Edit Role</h2>
+            <form id="roleForm">
+                <div class="form-group">
+                    <label for="roleName">Name</label>
+                    <input type="text" id="roleName" required>
+                </div>
+                <div class="form-group">
+                    <label for="roleColor">Color</label>
+                    <input type="color" id="roleColor" value="#4caf50">
+                </div>
+                <div class="form-group">
+                    <label for="roleRank">Rank</label>
+                    <input type="number" id="roleRank" min="1" max="100" value="10">
+                </div>
+                <div class="form-group">
+                    <label>Permissions</label>
+                    <div class="permissions-list" id="permissionsList"></div>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Role</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="roomModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Edit Room</h2>
+            <form id="roomForm">
+                <div class="form-group">
+                    <label for="roomName">Name</label>
+                    <input type="text" id="roomName" required>
+                </div>
+                <div class="form-group">
+                    <label for="roomDescription">Description</label>
+                    <textarea id="roomDescription"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="roomType">Type</label>
+                    <select id="roomType">
+                        <option value="public">Public</option>
+                        <option value="private">Private</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Permissions</label>
+                    <div class="permissions-list" id="roomPermissionsList"></div>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Room</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="memberModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="member-header">
+                <div class="profile-pic-large" id="memberModalPic"></div>
+                <h3 id="memberModalName">Member Name</h3>
+                <div class="member-role" id="memberModalRole">Role</div>
+            </div>
+            
+            <div class="member-actions">
+                <button class="btn btn-warning" id="kickMemberBtn">Kick</button>
+                <button class="btn btn-danger" id="banMemberBtn">Ban</button>
+                <button class="btn btn-primary" id="changeRoleBtn">Change Role</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="banModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Ban Member</h2>
+            <form id="banForm">
+                <div class="form-group">
+                    <label>Ban Duration</label>
+                    <select id="banDuration">
+                        <option value="1">1 Day</option>
+                        <option value="7">7 Days</option>
+                        <option value="30">30 Days</option>
+                        <option value="365">1 Year</option>
+                        <option value="permanent">Permanent</option>
+                        <option value="custom">Custom Date</option>
+                    </select>
+                </div>
+                <div class="form-group" id="customDateGroup" style="display: none;">
+                    <label for="banCustomDate">Until Date</label>
+                    <input type="date" id="banCustomDate">
+                </div>
+                <div class="form-group">
+                    <label for="banReason">Reason (Optional)</label>
+                    <textarea id="banReason"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelBanBtn">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Confirm Ban</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="editProfileModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Edit Profile</h2>
+            <form id="editProfileForm">
+                <div class="form-group">
+                    <label for="editUsername">Username</label>
+                    <input type="text" id="editUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="editBio">Bio</label>
+                    <textarea id="editBio"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Profile Photo</label>
+                    <div class="upload-btn-container">
+                        <button type="button" class="btn btn-secondary" id="uploadProfilePhotoBtn">
+                            <i class="fas fa-camera"></i> Change Photo
+                        </button>
+                        <input type="file" id="profilePhotoInput" accept="image/*" style="display: none;">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="changePasswordModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Change Password</h2>
+            <form id="changePasswordForm">
+                <div class="form-group">
+                    <label for="currentPassword">Current Password</label>
+                    <input type="password" id="currentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmNewPassword">Confirm New Password</label>
+                    <input type="password" id="confirmNewPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Change Password</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/friends.js"></script>
+    <script src="assets/js/groups.js"></script>
+    <script src="assets/js/chat.js"></script>
+    <script src="assets/js/ui.js"></script>
+</body>
+</html>

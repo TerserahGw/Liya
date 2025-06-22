@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chioriya Chat | Friends</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="friend-list-page">
+    <header class="app-header">
+        <button class="menu-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
+        <h1>Friends</h1>
+        <button class="profile-btn" id="profileBtn"><div class="profile-pic-small"></div></button>
+    </header>
+    
+    <main class="friend-list-main">
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search...">
+                <button class="search-btn" id="searchBtn"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+        
+        <div class="friend-navbar">
+            <button class="nav-btn active" id="manageBtn"><i class="fas fa-cog"></i></button>
+            <button class="nav-btn" id="searchUserBtn"><i class="fas fa-user-plus"></i></button>
+            <button class="nav-btn" id="searchFriendsBtn"><i class="fas fa-user-friends"></i></button>
+            <button class="nav-btn" id="approvalBtn"><i class="fas fa-user-clock"></i></button>
+        </div>
+        
+        <div class="friend-list-container">
+            <div class="section-title">Friends</div>
+            <div class="friend-list" id="friendsList"></div>
+            
+            <div class="section-title" id="searchResultsTitle" style="display: none;">Search Results</div>
+            <div class="friend-list" id="searchResultsList"></div>
+        </div>
+    </main>
+    
+    <div class="side-menu" id="sideMenu">
+        <div class="menu-header">
+            <div class="profile-pic-medium" id="menuProfilePic"></div>
+            <h3 id="menuUsername">Username</h3>
+            <button class="close-menu" id="closeMenu"><i class="fas fa-times"></i></button>
+        </div>
+        
+        <nav class="menu-nav">
+            <div class="menu-section">
+                <div class="menu-item" id="friendsMenuItem">
+                    <i class="fas fa-user-friends"></i>
+                    <span>Friends</span>
+                </div>
+                <div class="friend-list-menu" id="friendListMenu"></div>
+            </div>
+            
+            <div class="menu-section">
+                <div class="menu-item" id="groupsMenuItem">
+                    <i class="fas fa-users"></i>
+                    <span>Groups</span>
+                </div>
+                <div class="group-list-menu" id="groupListMenu"></div>
+                <button class="menu-item" id="createGroupBtn">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Create Group</span>
+                </button>
+            </div>
+        </nav>
+        
+        <div class="menu-footer">
+            <a href="#" class="menu-item" id="settingsMenuItem"><i class="fas fa-cog"></i> Settings</a>
+            <a href="#" class="menu-item" id="logoutMenuItem"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </div>
+    
+    <div class="profile-menu" id="profileMenu">
+        <div class="profile-menu-header">
+            <div class="profile-pic-large" id="profilePicLarge"></div>
+            <h3 id="profileMenuUsername">Username</h3>
+            <button class="close-profile-menu" id="closeProfileMenu"><i class="fas fa-times"></i></button>
+        </div>
+        
+        <div class="profile-menu-content">
+            <div class="profile-menu-item" id="editProfileBtn">
+                <i class="fas fa-user-edit"></i>
+                <span>Edit Profile</span>
+            </div>
+            <div class="profile-menu-item">
+                <i class="fas fa-share-alt"></i>
+                <span>My Invite Code: <span id="userInviteCode">XXXX-XXXX</span></span>
+                <button class="copy-btn" id="copyInviteBtn"><i class="fas fa-copy"></i></button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="editProfileModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Edit Profile</h2>
+            <form id="editProfileForm">
+                <div class="form-group">
+                    <label for="editUsername">Username</label>
+                    <input type="text" id="editUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="editBio">Bio</label>
+                    <textarea id="editBio"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Profile Photo</label>
+                    <div class="upload-btn-container">
+                        <button type="button" class="btn btn-secondary" id="uploadProfilePhotoBtn">
+                            <i class="fas fa-camera"></i> Change Photo
+                        </button>
+                        <input type="file" id="profilePhotoInput" accept="image/*" style="display: none;">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="modal" id="changePasswordModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Change Password</h2>
+            <form id="changePasswordForm">
+                <div class="form-group">
+                    <label for="currentPassword">Current Password</label>
+                    <input type="password" id="currentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmNewPassword">Confirm New Password</label>
+                    <input type="password" id="confirmNewPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Change Password</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="modal" id="createGroupModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Create Group</h2>
+            <form id="createGroupForm">
+                <div class="form-group">
+                    <label for="groupName">Group Name</label>
+                    <input type="text" id="groupName" required>
+                </div>
+                <div class="form-group">
+                    <label for="groupDescription">Description</label>
+                    <textarea id="groupDescription"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="groupType">Type</label>
+                    <select id="groupType">
+                        <option value="social">Social</option>
+                        <option value="gaming">Gaming</option>
+                        <option value="mystery">Mystery</option>
+                        <option value="political">Political</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Group Photo</label>
+                    <div class="upload-btn-container">
+                        <button type="button" class="btn btn-secondary" id="uploadGroupPhotoBtn">
+                            <i class="fas fa-camera"></i> Choose Photo
+                        </button>
+                        <input type="file" id="groupPhotoInput" accept="image/*" style="display: none;">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Group</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="modal" id="joinGroupModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Join Group</h2>
+            <form id="joinGroupForm">
+                <div class="form-group">
+                    <label for="groupInviteCode">Invite Code</label>
+                    <input type="text" id="groupInviteCode" placeholder="XXXX-XXXX" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelJoinBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Join</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="modal" id="friendRequestModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Friend Requests</h2>
+            <div class="request-list" id="requestList"></div>
+        </div>
+    </div>
+    
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/friends.js"></script>
+    <script src="assets/js/groups.js"></script>
+    <script src="assets/js/ui.js"></script>
+</body>
+</html>
