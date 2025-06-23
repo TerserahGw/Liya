@@ -5,6 +5,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const WebSocket = require('ws');
 const http = require('http');
+const path = require('path');
 
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
@@ -30,11 +31,15 @@ app.use('/api/groups', groupRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/friends', friendRoutes);
 
+app.use(express.static(path.join(__dirname, '../client/public')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/public/index.html'));
+});
+
 const activeConnections = new Map();
 
 wss.on('connection', (ws, req) => {
     const token = req.url.split('token=')[1];
-    
     if (!token) {
         ws.close();
         return;
@@ -44,14 +49,14 @@ wss.on('connection', (ws, req) => {
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         activeConnections.set(decoded.id, ws);
-        
+
         ws.on('close', () => {
             activeConnections.delete(decoded.id);
         });
-        
+
         ws.on('message', (message) => {
             const data = JSON.parse(message);
-            
+
             if (data.type === 'message') {
                 const recipientWs = activeConnections.get(data.data.recipient);
                 if (recipientWs) {
